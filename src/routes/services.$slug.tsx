@@ -18,14 +18,84 @@ export const Route = createFileRoute("/services/$slug")({
   },
   head: ({ loaderData }) => {
     const s = loaderData?.service;
+    
+    const getPageTitle = (service: any) => {
+      switch (service.slug) {
+        case "luxury-weddings":
+          return "Luxury Wedding Decorations in Hyderabad | Satavahana Events";
+        case "temple-weddings":
+          return "Ammapalli Temple Wedding Planners | Telugu Wedding Planners Hyderabad";
+        case "destination-weddings":
+          return "Destination Wedding Planning Services in Hyderabad | Satavahana Events";
+        case "engagements":
+          return "Engagement Event Planners in Hyderabad | Memorable Celebrations";
+        case "haldi":
+          return "Haldi & Mehendi Event Planners in Hyderabad | Satavahana Events";
+        case "sangeet":
+          return "Sangeet Event Planners in Hyderabad | Entertainment & Choreography";
+        case "reception":
+          return "Wedding Reception Decoration Ideas & Planning in Hyderabad";
+        default:
+          return `${service.title} in Hyderabad | Satavahana Events`;
+      }
+    };
+    
+    const getMetaDescription = (service: any) => {
+      switch (service.slug) {
+        case "luxury-weddings":
+          return "Premium luxury wedding decorations in Hyderabad for grand celebrations. Elegant wedding decor, mandap decoration & royal wedding stage decoration services by Satavahana Events. Call 8885552388.";
+        case "temple-weddings":
+          return "Ammapalli Temple wedding planners in Hyderabad. Traditional Telugu wedding organizers for South Indian temple weddings. Pandit coordination, traditional decor & complete wedding management. Call 8885552388.";
+        case "destination-weddings":
+          return "Destination wedding planning services in Hyderabad. Pan-India & international destination weddings - Goa, Jaipur, Udaipur, Bali. Complete travel, stay & decor management. Call 8885552388.";
+        case "engagements":
+          return "Engagement event planners in Hyderabad for memorable celebrations. Custom backdrops, floral decor & cinematic photography for your ring ceremony. Call 8885552388.";
+        case "haldi":
+          return "Haldi, Mehendi & Sangeet event planners in Hyderabad. Vibrant haldi ceremonies with marigold decor, poolside setups & candid photography. Call 8885552388.";
+        case "sangeet":
+          return "Sangeet event planners in Hyderabad with choreography, concert-grade sound & lighting, artist management & complete production. Make your sangeet unforgettable. Call 8885552388.";
+        case "reception":
+          return "Wedding reception decoration ideas & planning in Hyderabad. Designer stages, five-star catering, signature welcome rituals & entertainment. Call 8885552388.";
+        default:
+          return `${service.tagline} Professional ${service.title.toLowerCase()} services in Hyderabad by Satavahana Events. Call 8885552388 for a consultation.`;
+      }
+    };
+    
+    const getKeywords = (service: any) => {
+      const baseKeywords = "Satavahana Events, Hyderabad, wedding planners, event management, wedding organisers, marriage planners";
+      switch (service.slug) {
+        case "luxury-weddings":
+          return `${baseKeywords}, luxury weddings, luxury wedding decorations, best wedding decorators in Hyderabad, premium wedding decorators, royal wedding stage decoration, luxury mandap decoration, wedding mandap decorators Hyderabad, wedding stage decorators Hyderabad, elegant weddings, grand celebrations, grand wedding planners Hyderabad, wedding decoration packages Hyderabad`;
+        case "temple-weddings":
+          return `${baseKeywords}, temple weddings, Ammapalli temple wedding planners, Telugu wedding planners, Telugu wedding organisers Hyderabad, traditional South Indian weddings, temple wedding organizers, pandit coordination, wedding planners in Hyderabad for Telugu weddings`;
+        case "destination-weddings":
+          return `${baseKeywords}, destination weddings, destination wedding planning, Goa weddings, Jaipur weddings, Udaipur weddings, Bali weddings, wedding travel management, complete wedding planning services`;
+        case "engagements":
+          return `${baseKeywords}, engagement planners, engagement events, ring ceremony, engagement decor, memorable celebrations, engagement event planners in Hyderabad`;
+        case "haldi":
+          return `${baseKeywords}, haldi ceremony, mehendi, haldi planners, mehendi planners, haldi decor, marigold decor, Haldi Mehendi Sangeet event planners, wedding function organisers Hyderabad`;
+        case "sangeet":
+          return `${baseKeywords}, sangeet, sangeet planners, choreography, DJ nights, artist management, sangeet production, wedding event organisers Hyderabad`;
+        case "reception":
+          return `${baseKeywords}, wedding reception, reception decor, reception ideas, wedding reception planning, five-star reception, wedding reception decoration ideas, wedding decoration services Hyderabad`;
+        default:
+          return `${baseKeywords}, ${service.title.toLowerCase()}`;
+      }
+    };
+    
     return {
       meta: [
-        { title: `${s?.title ?? "Service"} — Satavahana Events` },
-        { name: "description", content: s?.tagline ?? "" },
-        { property: "og:title", content: `${s?.title ?? ""} — Satavahana Events` },
-        { property: "og:description", content: s?.description?.slice(0, 160) ?? "" },
+        { title: getPageTitle(s) },
+        { name: "description", content: getMetaDescription(s) },
+        { name: "keywords", content: getKeywords(s) },
+        { property: "og:title", content: getPageTitle(s) },
+        { property: "og:description", content: getMetaDescription(s) },
         { property: "og:image", content: s?.image ?? "" },
         { property: "og:type", content: "article" },
+        { property: "og:site_name", content: "Satavahana Events" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: getPageTitle(s) },
+        { name: "twitter:description", content: getMetaDescription(s) },
       ],
       links: [{ rel: "canonical", href: `/services/${s?.slug}` }],
     };

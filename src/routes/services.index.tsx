@@ -6,14 +6,25 @@ import { whatsappLink, defaultWAMessage } from "@/lib/contact";
 export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
-      { title: "Services — Satavahana Events" },
+      { title: "Wedding Planning Services | Satavahana Events Hyderabad" },
       {
         name: "description",
         content:
-          "Luxury weddings, temple weddings, destination weddings, sangeet, reception, birthdays, baby showers and private events by Satavahana.",
+          "Complete wedding planning & decoration services in Hyderabad by Satavahana Events. Luxury weddings, temple weddings, destination weddings, haldi, mehendi, sangeet, reception & engagement planning.",
       },
-      { property: "og:title", content: "Services — Satavahana Events" },
-      { property: "og:description", content: "Every occasion, crafted with cinematic care." },
+      {
+        name: "keywords",
+        content:
+          "wedding planning services, wedding decoration services, complete wedding planning, Hyderabad wedding services, Satavahana Events services",
+      },
+      { property: "og:title", content: "Wedding Planning Services | Satavahana Events" },
+      {
+        property: "og:description",
+        content:
+          "Complete wedding planning & decoration services. Luxury weddings, temple weddings, destination weddings & more by Satavahana Events.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Satavahana Events" },
     ],
     links: [{ rel: "canonical", href: "/services" }],
   }),

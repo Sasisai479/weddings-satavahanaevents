@@ -6,10 +6,25 @@ import { PHONE, telLink, whatsappLink, defaultWAMessage } from "@/lib/contact";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Plan With Us — Satavahana Events" },
-      { name: "description", content: "Book a luxury wedding consultation with Satavahana Events. Call 8885552388 or send your details via WhatsApp." },
-      { property: "og:title", content: "Plan With Us — Satavahana Events" },
-      { property: "og:description", content: "Start planning your luxury Telugu wedding with Satavahana." },
+      { title: "Contact Satavahana Events | Wedding Planners Hyderabad | Call 8885552388" },
+      {
+        name: "description",
+        content:
+          "Contact Satavahana Events – Best wedding planners in Hyderabad. Call 8885552388, WhatsApp us, or fill the form for wedding consultation, luxury decor, Telugu weddings & destination planning.",
+      },
+      {
+        name: "keywords",
+        content:
+          "contact Satavahana Events, wedding planners contact, Hyderabad wedding planners, call wedding planner, WhatsApp wedding planner, wedding consultation",
+      },
+      { property: "og:title", content: "Contact Satavahana Events | Wedding Planners Hyderabad" },
+      {
+        property: "og:description",
+        content:
+          "Get in touch with Satavahana Events. Call 8885552388 or WhatsApp for wedding planning consultation in Hyderabad.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Satavahana Events" },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
   }),

@@ -14,15 +14,33 @@ import { whatsappLink, defaultWAMessage } from "@/lib/contact";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Satavahana Events — Crafting Timeless Wedding Experiences" },
+      { title: "Best Wedding Planners in Hyderabad | Satavahana Events | Call 8885552388" },
       {
         name: "description",
         content:
-          "Cinematic luxury Telugu weddings, temple ceremonies and destination celebrations by Satavahana Events. Hyderabad based, pan-India service.",
+          "Satavahana Events – Top wedding planners in Hyderabad. Best wedding decorators, Telugu wedding organisers, wedding mandap decor, wedding stage decoration, affordable packages, low budget & grand weddings. Call 8885552388.",
       },
-      { property: "og:title", content: "Satavahana Events — Timeless Wedding Experiences" },
-      { property: "og:description", content: "Luxury weddings • Temple weddings • Destination celebrations" },
+      {
+        name: "keywords",
+        content:
+          "best wedding planners in Hyderabad, wedding planners near me Hyderabad, luxury wedding decorations Hyderabad, best wedding decorators in Hyderabad, Telugu wedding planners, Telugu wedding organisers Hyderabad, destination wedding planning Hyderabad, Ammapalli temple wedding planners, wedding event management company Hyderabad, wedding event organisers Hyderabad, wedding management companies in Hyderabad, premium wedding decorators, wedding mandap decorators Hyderabad, wedding stage decorators Hyderabad, Haldi Mehendi Sangeet event planners, royal wedding stage decoration, affordable wedding packages Hyderabad, wedding decoration packages Hyderabad, celebrity style wedding planning, traditional South Indian wedding organizers, outdoor wedding decoration services, wedding reception decoration ideas, engagement event planners, luxury mandap decoration, complete wedding planning services, wedding decoration services Hyderabad, wedding photography Hyderabad, wedding coordination services Hyderabad, wedding consultants in Hyderabad, wedding designers Hyderabad, marriage planners Hyderabad, wedding function organisers Hyderabad, wedding planners in Hyderabad with price, low budget wedding planners Hyderabad, best wedding organisers in Hyderabad, top wedding planners in Hyderabad, grand wedding planners Hyderabad, Satavahana Events",
+      },
+      { property: "og:title", content: "Best Wedding Planners in Hyderabad | Satavahana Events" },
+      {
+        property: "og:description",
+        content:
+          "Top wedding planners in Hyderabad. Best wedding decorators, Telugu weddings, destination celebrations & Ammapalli Temple weddings. Call 8885552388.",
+      },
       { property: "og:image", content: "/og-home.jpg" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Satavahana Events" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Best Wedding Planners in Hyderabad | Satavahana Events" },
+      {
+        name: "twitter:description",
+        content:
+          "Top wedding planners & decorators in Hyderabad. Luxury weddings, Telugu weddings, destination celebrations & more. Call 8885552388.",
+      },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),

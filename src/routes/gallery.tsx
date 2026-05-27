@@ -12,10 +12,25 @@ import { services } from "@/lib/services";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Satavahana Events" },
-      { name: "description", content: "Cinematic frames and reels from luxury weddings, temple ceremonies and destination celebrations." },
-      { property: "og:title", content: "Gallery — Satavahana Events" },
-      { property: "og:description", content: "Wedding photography & cinematic reels." },
+      { title: "Wedding Photography Gallery | Satavahana Events Hyderabad" },
+      {
+        name: "description",
+        content:
+          "Wedding photography & event coordination gallery by Satavahana Events. View cinematic frames from luxury weddings, Telugu temple weddings, destination weddings & receptions in Hyderabad.",
+      },
+      {
+        name: "keywords",
+        content:
+          "wedding photography Hyderabad, wedding gallery, wedding photos, Telugu wedding photos, luxury wedding photos, destination wedding photos, Satavahana Events gallery",
+      },
+      { property: "og:title", content: "Wedding Photography Gallery | Satavahana Events" },
+      {
+        property: "og:description",
+        content:
+          "Cinematic wedding photography gallery from Satavahana Events. Luxury weddings, temple ceremonies & destination celebrations.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Satavahana Events" },
     ],
     links: [{ rel: "canonical", href: "/gallery" }],
   }),

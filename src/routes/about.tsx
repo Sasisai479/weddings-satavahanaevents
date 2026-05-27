@@ -5,10 +5,25 @@ import { whatsappLink, defaultWAMessage } from "@/lib/contact";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Satavahana Events" },
-      { name: "description", content: "A premium Telugu wedding house designed like cinema. Meet Satavahana Events." },
-      { property: "og:title", content: "About — Satavahana Events" },
-      { property: "og:description", content: "A premium Telugu wedding house designed like cinema." },
+      { title: "About Satavahana Events | Trusted Wedding Planners in Hyderabad" },
+      {
+        name: "description",
+        content:
+          "Satavahana Events – Premium Telugu wedding house in Hyderabad with 12+ years experience. 500+ celebrations crafted across 25+ destinations. Luxury weddings, temple weddings & destination celebrations. Call 8885552388.",
+      },
+      {
+        name: "keywords",
+        content:
+          "Satavahana Events, about us, wedding planners Hyderabad, Telugu wedding house, wedding experience, wedding planning team",
+      },
+      { property: "og:title", content: "About Satavahana Events | Wedding Planners Hyderabad" },
+      {
+        property: "og:description",
+        content:
+          "Premium Telugu wedding house in Hyderabad. 500+ celebrations, 12+ years experience. Luxury weddings, temple weddings & destination celebrations.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Satavahana Events" },
     ],
     links: [{ rel: "canonical", href: "/about" }],
   }),
