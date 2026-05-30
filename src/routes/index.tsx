@@ -128,21 +128,27 @@ function Index() {
 
       </section>
 
-      {/* INTRO */}
+      {/* INTRO / SEO CONTENT */}
       <section className="py-24 md:py-32">
         <div className="container-luxe grid gap-12 md:grid-cols-12 reveal">
           <div className="md:col-span-5">
             <p className="text-xs uppercase tracking-[0.3em] text-primary">The House</p>
             <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
-              A premium Telugu wedding house, designed like cinema.
+              Best Wedding Planners in Hyderabad
             </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Satavahana Events — 12+ years crafting 500+ celebrations across 25+ destinations. Luxury weddings, temple weddings & destination celebrations.
+            </p>
           </div>
-          <div className="md:col-span-7 md:pt-3">
+          <div className="md:col-span-7 md:pt-3 space-y-5">
             <p className="text-lg leading-relaxed text-muted-foreground">
-              Satavahana Events is built on a single belief — that a wedding should feel like a film of its
-              own. Every mandap, every frame, every dish and every reel is composed with intention. We work
-              with a curated network of designers, florists, chefs and cinematographers across India to
-              produce celebrations that feel deeply Telugu, deeply personal and unmistakably luxurious.
+              As one of the <strong>best wedding planners in Hyderabad</strong>, Satavahana Events specialises in creating cinematic, deeply personal Telugu wedding experiences. From sacred Ammapalli temple ceremonies to grand luxury receptions and destination celebrations across Goa, Jaipur, Udaipur and beyond, we handle every detail — from venue scouting and mandap design to catering, photography and guest management.
+            </p>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              Our approach blends Telugu tradition with modern luxury. We work with a curated network of designers, florists, chefs and cinematographers to craft celebrations that feel timeless, elegant and unmistakably "you". Whether you're looking for <strong>low budget wedding planners in Hyderabad</strong> or premium luxury wedding decorators, our team customises every package to match your vision and budget.
+            </p>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              With 100% couple satisfaction and a track record of 500+ successful weddings, Satavahana Events stands as a trusted name among <strong>wedding management companies in Hyderabad</strong>. Call us today at 8885552388 to start planning your dream wedding.
             </p>
           </div>
         </div>
