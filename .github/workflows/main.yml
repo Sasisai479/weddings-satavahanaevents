@@ -100,13 +100,15 @@ jobs:
           name: spa-deploy
           path: deploy/
 
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: "157.173.216.88"
-          username: "u551651590.weddings"
-          password: "Singer@1984"
-          port: 21
-          local-dir: deploy/
-          server-dir: /
-          dangerous-clean-slate: false
+      - - name: FTP Deploy
+  uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+  with:
+    server: ${{ secrets.FTP_SERVER }}
+    username: ${{ secrets.FTP_USERNAME }}
+    password: ${{ secrets.FTP_PASSWORD }}
+    port: 21
+    protocol: ftp
+    local-dir: deploy/
+    server-dir: /
+    dangerous-clean-slate: false
+    log-level: verbose
