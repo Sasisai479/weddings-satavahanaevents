@@ -1,6 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Star, Sparkles, Instagram } from "lucide-react";
-import hero from "@/assets/hero-wedding.jpg";
 import g1 from "@/assets/gallery-1.jpg";
 import g2 from "@/assets/gallery-2.jpg";
 import g3 from "@/assets/gallery-3.jpg";
@@ -50,21 +49,9 @@ export default function Index() {
     <div>
       {/* HERO */}
       <section className="relative min-h-screen overflow-hidden">
-        <img
-          src={hero}
-          alt="Cinematic Telugu temple wedding"
-          width={1920}
-          height={1080}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0.08_0.005_60/0.7)_100%)]" />
 
         <div className="container-luxe relative z-10 flex min-h-screen flex-col items-center justify-center pt-24 text-center">
           <div className="animate-fade-up">
-            <p className="mb-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.4em] text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> Satavahana Events
-            </p>
             <h1 className="mx-auto max-w-4xl text-5xl leading-[1.05] text-foreground md:text-7xl lg:text-8xl">
               Crafting <em className="text-gradient-gold not-italic">Timeless</em> Wedding Experiences
             </h1>
