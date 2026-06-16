@@ -1,108 +1,118 @@
 name: Deploy SPA to Hostinger (FTPS)
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
-workflow_dispatch:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA to deploy (leave empty for latest)'
+        required: false
 
 jobs:
-build:
-name: Build SPA
-runs-on: ubuntu-latest
+  build:
+    name: Build SPA
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-  - name: Setup Node
-    uses: actions/setup-node@v4
-    with:
-      node-version: 22
+      - name: Install dependencies
+        run: npm install
 
-  - name: Install dependencies
-    run: npm install
+      - name: Build SPA
+        run: CI=false npm run build
 
-  - name: Build SPA
-    run: npm run build
+      - name: Resolve SPA output directory
+        id: resolve
+        run: |
+          if [ -f "dist/client/index.html" ]; then
+            echo "dir=dist/client" >> $GITHUB_OUTPUT
+          elif [ -f ".output/public/index.html" ]; then
+            echo "dir=.output/public" >> $GITHUB_OUTPUT
+          elif [ -f "dist/index.html" ]; then
+            echo "dir=dist" >> $GITHUB_OUTPUT
+          else
+            echo "Could not locate built index.html (SPA shell)." >&2
+            echo "Searched: dist/client, .output/public, dist" >&2
+            ls -la .output/public dist dist/client 2>/dev/null || true
+            exit 1
+          fi
 
-  - name: Resolve SPA output directory
-    id: resolve
-    run: |
-      if [ -f "dist/client/index.html" ]; then
-        echo "dir=dist/client" >> $GITHUB_OUTPUT
-      elif [ -f ".output/public/index.html" ]; then
-        echo "dir=.output/public" >> $GITHUB_OUTPUT
-      elif [ -f "dist/index.html" ]; then
-        echo "dir=dist" >> $GITHUB_OUTPUT
-      else
-        echo "Could not locate build output"
-        exit 1
-      fi
+          echo "Using SPA output: $(cat $GITHUB_OUTPUT | tail -n 1 | cut -d= -f2)"
 
-  - name: Stage deploy directory
-    run: |
-      mkdir -p deploy
-      cp -r ${{ steps.resolve.outputs.dir }}/. deploy/
+      - name: Stage deploy directory
+        run: |
+          mkdir -p deploy
+          cp -r ${{ steps.resolve.outputs.dir }}/. deploy/
+          if ! grep -Eq '<script[^>]+(type="module"|src=)' deploy/index.html; then
+            echo "Built index.html does not contain the SPA JavaScript entry." >&2
+            exit 1
+          fi
+          # SPA fallback + clean URL rewrites for Apache (Hostinger)
+          cat > deploy/.htaccess << 'EOF'
+          Options -MultiViews
+          RewriteEngine On
 
-      cat > deploy/.htaccess << 'EOF'
-      Options -MultiViews
-      RewriteEngine On
+          # Don't rewrite real files or directories
+          RewriteCond %{REQUEST_FILENAME} -f [OR]
+          RewriteCond %{REQUEST_FILENAME} -d
+          RewriteRule ^ - [L]
 
-      RewriteCond %{REQUEST_FILENAME} -f [OR]
-      RewriteCond %{REQUEST_FILENAME} -d
-      RewriteRule ^ - [L]
+          # Send everything else to the SPA shell
+          RewriteRule ^ index.html [QSA,L]
 
-      RewriteRule ^ index.html [L]
+          # Long-cache hashed build assets
+          <IfModule mod_headers.c>
+            <FilesMatch "\.(js|css|woff2?|ttf|otf|eot|svg|png|jpe?g|gif|webp|avif|ico)$">
+              Header set Cache-Control "public, max-age=31536000, immutable"
+            </FilesMatch>
+            <FilesMatch "index\.html$">
+              Header set Cache-Control "no-cache, no-store, must-revalidate"
+            </FilesMatch>
+          </IfModule>
+          EOF
 
-      <IfModule mod_headers.c>
-        <FilesMatch "\.(js|css|woff2?|ttf|otf|eot|svg|png|jpe?g|gif|webp|avif|ico)$">
-          Header set Cache-Control "public, max-age=31536000, immutable"
-        </FilesMatch>
+      - name: Upload deploy artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spa-deploy
+          path: deploy/
+          retention-days: 1
 
-        <FilesMatch "index\.html$">
-          Header set Cache-Control "no-cache, no-store, must-revalidate"
-        </FilesMatch>
-      </IfModule>
-      EOF
+  deploy:
+    name: Deploy to Hostinger (FTPS)
+    runs-on: ubuntu-latest
+    needs: build
 
-  - name: Verify build output
-    run: |
-      echo "Deploy contents:"
-      find deploy -type f | sort
+    steps:
+      - name: Download deploy artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: spa-deploy
+          path: deploy/
 
-  - name: Upload artifact
-    uses: actions/upload-artifact@v4
-    with:
-      name: spa-deploy
-      path: deploy/
-
-
-deploy:
-name: Deploy to Hostinger (FTPS)
-runs-on: ubuntu-latest
-needs: build
-
-
-steps:
-  - name: Download artifact
-    uses: actions/download-artifact@v4
-    with:
-      name: spa-deploy
-      path: deploy/
-
-  - name: Deploy to Hostinger
-    uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-    with:
-      server: ${{ secrets.FTP_SERVER }}
-      username: ${{ secrets.FTP_USERNAME }}
-      password: ${{ secrets.FTP_PASSWORD }}
-      protocol: ftps
-      port: 21
-      local-dir: deploy/
-      server-dir: /public_html/
-      dangerous-clean-slate: false
-      log-level: verbose
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps  # Hostinger recommends FTPS for security
+          secure: true
+          passive: true  # Required for Hostinger (behind firewall)
+          timeout: 30000  # 30 second timeout
+          local-dir: deploy/
+          server-dir: /public_html/  # Hostinger's default web root
+          dangerous-clean-slate: false
+          log-level: verbose  # Diagnostic logging
 
