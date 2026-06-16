@@ -3,35 +3,7 @@ import { Phone, MessageCircle, MapPin } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { PHONE, telLink, whatsappLink, defaultWAMessage } from "@/lib/contact";
 
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact Satavahana Events | Wedding Planners Hyderabad | Call 8885552388" },
-      {
-        name: "description",
-        content:
-          "Contact Satavahana Events – Best wedding planners in Hyderabad. Call 8885552388, WhatsApp us, or fill the form for wedding consultation, luxury decor, Telugu weddings & destination planning.",
-      },
-      {
-        name: "keywords",
-        content:
-          "contact Satavahana Events, wedding planners contact, Hyderabad wedding planners, call wedding planner, WhatsApp wedding planner, wedding consultation",
-      },
-      { property: "og:title", content: "Contact Satavahana Events | Wedding Planners Hyderabad" },
-      {
-        property: "og:description",
-        content:
-          "Get in touch with Satavahana Events. Call 8885552388 or WhatsApp for wedding planning consultation in Hyderabad.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Satavahana Events" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
-  }),
-  component: Contact,
-});
-
-function Contact() {
+export default function Contact() {
   return (
     <div className="pt-32">
       <section className="container-luxe py-12 md:py-16">
@@ -72,3 +44,7 @@ function Contact() {
     </div>
   );
 }
+
+export const Route = createFileRoute("/contact")({
+  component: Contact,
+});

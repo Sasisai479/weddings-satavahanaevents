@@ -1,4 +1,4 @@
-name: Deploy SPA to Hostinger (FTP)
+name: Deploy SPA to Hostinger (FTPS)
 
 on:
   push:
@@ -89,7 +89,7 @@ jobs:
           retention-days: 1
 
   deploy:
-    name: Deploy to Hostinger (FTP)
+    name: Deploy to Hostinger (FTPS)
     runs-on: ubuntu-latest
     needs: build
 
@@ -103,10 +103,15 @@ jobs:
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "157.173.216.88"
-          username: "u551651590.weddings"
-          password: "Singer@1984"
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           port: 21
+          protocol: ftps  # Hostinger recommends FTPS for security
+          secure: true
+          passive: true  # Required for Hostinger (behind firewall)
+          timeout: 30000  # 30 second timeout
           local-dir: deploy/
-          server-dir: /
+          server-dir: /public_html/  # Hostinger's default web root
           dangerous-clean-slate: false
+          log-level: verbose  # Diagnostic logging

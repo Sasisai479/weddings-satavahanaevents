@@ -1,37 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { services } from "@/lib/services";
 import { ServiceCard } from "@/components/ServiceCard";
 import { whatsappLink, defaultWAMessage } from "@/lib/contact";
 
-export const Route = createFileRoute("/services/")({
-  head: () => ({
-    meta: [
-      { title: "Wedding Planning Services | Satavahana Events Hyderabad" },
-      {
-        name: "description",
-        content:
-          "Complete wedding planning & decoration services in Hyderabad by Satavahana Events. Luxury weddings, temple weddings, destination weddings, haldi, mehendi, sangeet, reception & engagement planning.",
-      },
-      {
-        name: "keywords",
-        content:
-          "wedding planning services, wedding decoration services, complete wedding planning, Hyderabad wedding services, Satavahana Events services",
-      },
-      { property: "og:title", content: "Wedding Planning Services | Satavahana Events" },
-      {
-        property: "og:description",
-        content:
-          "Complete wedding planning & decoration services. Luxury weddings, temple weddings, destination weddings & more by Satavahana Events.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Satavahana Events" },
-    ],
-    links: [{ rel: "canonical", href: "/services" }],
-  }),
-  component: ServicesPage,
-});
-
-function ServicesPage() {
+export default function ServicesPage() {
   return (
     <div className="pt-32">
       <section className="container-luxe py-16 md:py-24">
@@ -66,3 +38,7 @@ function ServicesPage() {
     </div>
   );
 }
+
+export const Route = createFileRoute("/services/")({
+  component: ServicesPage,
+});
