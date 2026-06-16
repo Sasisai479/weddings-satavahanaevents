@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -54,7 +53,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{ queryClient: any }>()({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
@@ -74,6 +73,7 @@ function RootComponent() {
 
   // Global reveal-on-scroll: any element with class "reveal" fades up when in view
   useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -98,13 +98,13 @@ function RootComponent() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Header />
       <main className="min-h-screen pt-0">
         <Outlet />
       </main>
       <Footer />
       <FloatingContact />
-    </QueryClientProvider>
+    </>
   );
 }

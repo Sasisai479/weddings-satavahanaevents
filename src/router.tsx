@@ -194,9 +194,9 @@ export const createAppRouter = (queryClient: QueryClient) => {
   });
 };
 
-// Register types (commented out to avoid duplicate declaration with src/main.tsx)
-// declare module "@tanstack/react-router" {
-//   interface Register {
-//     router: ReturnType<typeof createAppRouter>;
-//   }
-// }
+// Register types
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: ReturnType<typeof createAppRouter>;
+  }
+}
