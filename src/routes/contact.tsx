@@ -1,5 +1,5 @@
-import { Phone, MessageCircle, MapPin } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { Phone, MessageCircle, MapPin } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { PHONE, telLink, whatsappLink, defaultWAMessage } from "@/lib/contact";
 

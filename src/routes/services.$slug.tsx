@@ -9,6 +9,14 @@ import g3 from "@/assets/gallery-3.jpg";
 import g4 from "@/assets/gallery-4.jpg";
 import g5 from "@/assets/gallery-5.jpg";
 import g6 from "@/assets/gallery-6.jpg";
+import luxury1 from "@/assets/luxury-1.jpg";
+import luxury2 from "@/assets/luxury-2.jpg";
+import luxury3 from "@/assets/luxury-3.jpg";
+import luxury4 from "@/assets/luxury-4.jpg";
+import luxury5 from "@/assets/luxury-5.jpg";
+import luxury6 from "@/assets/luxury-6.jpg";
+import luxury7 from "@/assets/luxury-7.jpg";
+import luxury8 from "@/assets/luxury-8.jpg";
 
 export const Route = createFileRoute("/services/$slug")({
   loader: ({ params }) => {
@@ -217,11 +225,16 @@ function ServiceDetail() {
             <h2 className="mt-3 text-3xl md:text-4xl">{service.title} — Cinematic Frames</h2>
           </div>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
-            {[service.image, g1, g2, g3, g4, g5, g6].map((src, i) => (
-              <div key={i} className={`group overflow-hidden rounded-lg ${i === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""} aspect-square`}>
-                <img src={src} alt={`${service.title} ${i + 1}`} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1500ms] group-hover:scale-110" />
-              </div>
-            ))}
+            {(() => {
+              if (service.slug === "luxury-weddings") {
+                return [];
+              }
+              return [service.image, g1, g2, g3, g4, g5, g6].map((src, i) => (
+                <div key={i} className={`group overflow-hidden rounded-lg ${i === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""} aspect-square`}>
+                  <img src={src} alt={`${service.title} ${i + 1}`} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1500ms] group-hover:scale-110" />
+                </div>
+              ));
+            })()}
           </div>
         </div>
       </section>

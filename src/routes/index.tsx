@@ -49,6 +49,7 @@ export default function Index() {
     <div>
       {/* HERO */}
       <section className="relative min-h-screen overflow-hidden">
+
         <div className="container-luxe relative z-10 flex min-h-screen flex-col items-center justify-center pt-24 text-center">
           <div className="animate-fade-up">
             <h1 className="mx-auto max-w-4xl text-5xl leading-[1.05] text-foreground md:text-7xl lg:text-8xl">

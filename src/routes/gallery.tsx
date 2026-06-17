@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ImageIcon, Play, X } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { ImageIcon, Play, X } from "lucide-react";
 import g1 from "@/assets/gallery-1.jpg";
 import g2 from "@/assets/gallery-2.jpg";
 import g3 from "@/assets/gallery-3.jpg";

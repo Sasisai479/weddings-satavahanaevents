@@ -1,5 +1,5 @@
 import temple from "@/assets/cat-temple.jpg";
-import luxury from "@/assets/cat-luxury.jpg";
+import luxury from "@/assets/luxury-1.jpg";
 import destination from "@/assets/cat-destination.jpg";
 import intimate from "@/assets/cat-intimate.jpg";
 import engagement from "@/assets/cat-engagement.jpg";
