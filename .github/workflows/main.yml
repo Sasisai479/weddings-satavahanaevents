@@ -1,99 +1,72 @@
-name: Deploy SPA to Hostinger (FTPS)
+name: Deploy Website (FTP)
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
-workflow_dispatch:
-inputs:
-commit_sha:
-description: 'Commit SHA to deploy (leave empty for latest)'
-required: false
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA to deploy (leave empty for latest)'
+        required: false
 
 jobs:
-build:
-name: Build SPA
-runs-on: ubuntu-latest
+  build:
+    name: Build React App
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Setup Node
-    uses: actions/setup-node@v4
-    with:
-      node-version: '22'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-  - name: Install dependencies
-    run: npm install
+      - name: Install dependencies
+        run: npm install
 
-  - name: Build SPA
-    run: CI=false npm run build
+      - name: Build project
+        run: CI=false npm run build
 
-  - name: Resolve SPA output directory
-    id: resolve
-    run: |
-      if [ -f "dist/client/index.html" ]; then
-        echo "dir=dist/client" >> $GITHUB_OUTPUT
-      elif [ -f ".output/public/index.html" ]; then
-        echo "dir=.output/public" >> $GITHUB_OUTPUT
-      elif [ -f "dist/index.html" ]; then
-        echo "dir=dist" >> $GITHUB_OUTPUT
-      else
-        echo "Could not locate built index.html (SPA shell)." >&2
-        exit 1
-      fi
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files
+          path: dist/
+          retention-days: 1
 
-  - name: Stage deploy directory
-    run: |
-      mkdir -p deploy
-      cp -r ${{ steps.resolve.outputs.dir }}/. deploy/
+  deploy:
+    name: Deploy to Hostinger (FTP)
+    runs-on: ubuntu-latest
+    needs: build
 
-      cat > deploy/.htaccess << 'EOF'
-      Options -MultiViews
-      RewriteEngine On
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files
+          path: dist/
 
-      RewriteCond %{REQUEST_FILENAME} -f [OR]
-      RewriteCond %{REQUEST_FILENAME} -d
-      RewriteRule ^ - [L]
+      - name: Create .htaccess for React Router
+        run: |
+          cat > dist/.htaccess << 'EOF'
+          Options -MultiViews
+          RewriteEngine On
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule ^ index.html [QSA,L]
+          EOF
 
-      RewriteRule ^ index.html [QSA,L]
-      EOF
-
-  - name: Upload deploy artifact
-    uses: actions/upload-artifact@v4
-    with:
-      name: spa-deploy
-      path: deploy/
-      retention-days: 1
-```
-
-deploy:
-name: Deploy to Hostinger (FTPS)
-runs-on: ubuntu-latest
-needs: build
-
-```
-steps:
-  - name: Download deploy artifact
-    uses: actions/download-artifact@v4
-    with:
-      name: spa-deploy
-      path: deploy/
-
-  - name: FTP Deploy
-    uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-    with:
-      server: ${{ secrets.FTP_SERVER }}
-      username: ${{ secrets.FTP_USERNAME }}
-      password: ${{ secrets.FTP_PASSWORD }}
-      port: 21
-      protocol: ftp
-      timeout: 30000
-      local-dir: deploy/
-      server-dir: /public_html/
-      dangerous-clean-slate: false
-      log-level: verbose
-```
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: "157.173.216.88"
+          username: "u551651590.weddings"
+          password: "Singer@1984"
+          port: 21
+          local-dir: dist/
+          server-dir: /
+          dangerous-clean-slate: false
